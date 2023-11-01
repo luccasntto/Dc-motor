@@ -1,32 +1,19 @@
-# Prerequisites
-*.d
+#include <AFMotor.h> // Inclui a biblioteca AFMotor.h
 
-# Compiled Object files
-*.slo
-*.lo
-*.o
-*.obj
+AF_DCMotor motor(4); // Cria um objeto motor associado ao pino 4
 
-# Precompiled Headers
-*.gch
-*.pch
+int potPin = A0; // Define o pino do potenciômetro como A0
+int valorPot; // Declara uma variável para armazenar o valor do potenciômetro
 
-# Compiled Dynamic libraries
-*.so
-*.dylib
-*.dll
+void setup() {
+  motor.setSpeed(0); // Inicializa a velocidade do motor como 0
+  motor.run(RELEASE); // Coloca o motor em estado de liberação
+}
 
-# Fortran module files
-*.mod
-*.smod
+void loop() {
+  valorPot = analogRead(potPin); // Lê o valor do potenciômetro
+  valorPot = map(valorPot, 0, 1023, 0, 255); // Mapeia o valor para um intervalo de 0 a 255
 
-# Compiled Static libraries
-*.lai
-*.la
-*.a
-*.lib
-
-# Executables
-*.exe
-*.out
-*.app
+  motor.setSpeed(valorPot); // Define a velocidade do motor com base no valor do potenciômetro
+  motor.run(FORWARD); // Faz o motor girar para a frente
+}
